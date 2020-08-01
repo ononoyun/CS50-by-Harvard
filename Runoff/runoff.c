@@ -34,6 +34,7 @@ bool print_winner(void);
 int find_min(void);
 bool is_tie(int min);
 void eliminate(int min);
+void check(int v, int r);
 
 int main(int argc, string argv[])
 {
@@ -143,6 +144,29 @@ bool vote(int voter, int rank, string name)
     return false;
 }
 
+// Checks if candidate has been eliminated. If true, checks the next preference of the voter. 
+void check(int v, int r)
+{
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (preferences[v][r] == i)
+        {
+            if (candidates[i].eliminated == true)
+            {
+                check(v, r + 1);
+            }
+            else
+            {
+                candidates[i].votes++;
+            }
+        }
+        else
+        {
+            continue;
+        }
+    }
+}
+
 // Tabulate votes for non-eliminated candidates
 void tabulate(void)
 {
@@ -151,23 +175,9 @@ void tabulate(void)
     {
         int r = 0;
 
-        for (int i = 0; i < candidate_count; i++)
-        {
-
-            if (preferences[v][r] == i)
-            {
-                if (candidates[i].eliminated == true)
-                {
-                    r++;
-                }
-                else
-                {
-                    candidates[i].votes++;
-                }
-            }
-        }
+        check(v, r);
     }
-    return;
+
 }
 
 // Print the winner of the election, if there is one
@@ -179,7 +189,7 @@ bool print_winner(void)
         // Check if any candidate has majority of the votes
         if (candidates[i].votes > (voter_count / 2))
         {
-            printf("%s", candidates[i].name);
+            printf("%s\n", candidates[i].name);
             return true;
         }
     }
