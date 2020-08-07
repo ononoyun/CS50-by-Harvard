@@ -1,6 +1,6 @@
 from sys import argv, exit
 from cs50 import get_string
-import csv 
+import csv
 
 def main():
 # Check if user provided a command line argument
@@ -11,19 +11,28 @@ def main():
 
 # Open the CSV file for reading
 
-    with open(argv[1],"r") as database: 
+    with open(argv[1],"r") as database:
         reader = csv.reader(database)
         i = next(reader)
-        for x in range (0, len(i), 1):
+        for x in range (1, len(i), 1):
+            print(f"{i[x]}")
             check(i[x])
 
 def check(string):
     with open(argv[2],'r') as sequence:
-        #compare the column name with DNA sequence
-        if sequence.find(string) != -1:
-            print(f"{string} found.")
-        else:
-            print("not found")
+        dna = sequence.read()
+        count = 0
+        if string in dna:
+            index = dna.find(string)
+            print(index)
+            if index > -1:
+                count = 1
+            #compare the column name with DNA sequence
+                while dna[(index+len(string)) : (index+len(string)+len(string))] == string:
+                    count += 1
+                    index += len(string)
+                
+        print(count)
 
 main()
 #sequence = open(argv[2], "r")
