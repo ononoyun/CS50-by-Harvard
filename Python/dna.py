@@ -14,39 +14,51 @@ def main():
         reader = csv.reader(database)
         i = next(reader)
 
-        #Create a list of dictionaries from the csv file
+        #Create a list of lists from the csv file
         data = [row for row in reader]
         print(f"Original: {data}")
 
-        # Create a dictionary to store the returned values
+        # Create a list to store the returned values from "count" function
         newlist = []
-        #d = {}
         for n in range (1, len(i), 1):
-            #d = {i[n] : count(i[n])}
             newlist.append(count(i[n]))
         print(f"New: {newlist}")
 
-        print(data[1][1])
-        print(newlist[0])
+        result = check(i, data, newlist)
+        if result == None:
+            print("No match")
+        else:
+            print(result)
 
-
-def compare(data, newlist):
-    return
-
-# Count STRs in the text file. Compute the longest run of consecitive repeats for each STR in the sequence
+def check(i, data, newlist):
+    length = len(data)
+    for e in range(len(data)):
+        for x in range(len(i)-2):
+            if int(data[e][1+x]) == newlist[0+x]:
+                if x == len(i)-3:
+                    return data[e][0]
+                else: 
+                    continue
+            else: 
+                break
+            
+# Count STRs in the text file. Compute the longest run of consecutive repeats for each STR in the sequence
 def count(string):
     with open(argv[2],'r') as sequence:
         dna = sequence.read()
         consq = 0
-        if string in dna:
-            index = dna.find(string)
-            #print(index)
-            if index > -1:
+        index = 0
+        search(index,len(dna),string)
+            if string in dna[index:len(dna)]: #FIGURE OUT HOW TO SPLIT A STRING & WRITE RECURSIVE FUNCTION
+                index = dna.find(string)
                 consq = 1
-            #compare the column name with DNA sequence
+                #compare the column name with DNA sequence
                 while dna[(index+len(string)) : (index+len(string)+len(string))] == string:
                     consq += 1
                     index += len(string)
+                return consq
+                search(index,len(dna),string)
+        print(occur)
         return consq
 
 main()
