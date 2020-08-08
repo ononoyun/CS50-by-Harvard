@@ -13,13 +13,25 @@ def main():
     with open(argv[1],"r") as database:
         reader = csv.reader(database)
         i = next(reader)
-        sequences = {rows[0]:rows[len(i)-2] for rows in reader} # Need to figure out how to create a dictionary
-        print(sequences)
-        for x in range (1, len(i), 1):
-            print(f"{i[x]}")
-            print(f"{count(i[x])}")
+
+        #Create a list of dictionaries from the csv file
+        data = [row for row in reader]
+        print(f"Original: {data}")
+
+        # Create a dictionary to store the returned values
+        newlist = []
+        #d = {}
+        for n in range (1, len(i), 1):
+            #d = {i[n] : count(i[n])}
+            newlist.append(count(i[n]))
+        print(f"New: {newlist}")
+
+        print(data[1][1])
+        print(newlist[0])
 
 
+def compare(data, newlist):
+    return
 
 # Count STRs in the text file. Compute the longest run of consecitive repeats for each STR in the sequence
 def count(string):
@@ -28,7 +40,7 @@ def count(string):
         consq = 0
         if string in dna:
             index = dna.find(string)
-            print(index)
+            #print(index)
             if index > -1:
                 consq = 1
             #compare the column name with DNA sequence
@@ -38,29 +50,3 @@ def count(string):
         return consq
 
 main()
-#sequence = open(argv[2], "r")
-
-#with file:
-#    reader = csv.DictReader(file)
-#    for row in reader:
-#        print(row['AATG'])
-# Create a dictionary  name,AGATC,TTTTTTCT,AATG,TCTAG,GATA,TATC,GAAA,TCTG
-#dictionary = {
-#    "name": "string in the first column"
-#   "AGATC": "number"
-#    "TTTTTTCT": "number"
-#    "ATTG": "number"
-#    "TCTAG": "number"
-#    "GATA": "number"
-#    "TATC": "number"
-#   "GAAA": "number"
-#    "TCTG": "number"
-#}
-
-# Open the text file
-
-
-#sequence = {
-
-#}
-# Check the dictionary for a match
