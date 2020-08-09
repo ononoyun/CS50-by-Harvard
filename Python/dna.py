@@ -37,28 +37,27 @@ def check(i, data, newlist):
             if int(data[e][1+x]) == newlist[0+x]:
                 if x == len(i)-3:
                     return data[e][0]
-                else: 
+                else:
                     continue
-            else: 
+            else:
                 break
-            
+
 # Count STRs in the text file. Compute the longest run of consecutive repeats for each STR in the sequence
 def count(string):
     with open(argv[2],'r') as sequence:
         dna = sequence.read()
         consq = 0
         index = 0
-        search(index,len(dna),string)
-            if string in dna[index:len(dna)]: #FIGURE OUT HOW TO SPLIT A STRING & WRITE RECURSIVE FUNCTION
-                index = dna.find(string)
+        while index < len(dna):
+            index = dna.find(string, index)
+            if index == -1:
+                break
+            else:
                 consq = 1
                 #compare the column name with DNA sequence
                 while dna[(index+len(string)) : (index+len(string)+len(string))] == string:
                     consq += 1
                     index += len(string)
-                return consq
-                search(index,len(dna),string)
-        print(occur)
         return consq
 
 main()
